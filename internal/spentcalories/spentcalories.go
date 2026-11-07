@@ -27,13 +27,21 @@ func parseTraining(data string) (int, string, time.Duration, error) {
 	}
 	// Преобразуем количество шагов
 	steps, err := strconv.Atoi(parts[0])
+	// Проверка кол-ва шагов на 0
+
 	if err != nil {
 		return 0, "", 0, err
+	}
+	if steps <= 0 {
+		return 0, "", 0, errors.New("the number of steps must be positive.")
 	}
 	// Преобразуем продолжительность
 	duration, err := time.ParseDuration(parts[2])
 	if err != nil {
 		return 0, "", 0, err
+	}
+	if duration <= 0 {
+		return 0, "", 0, errors.New("the duration of steps must be positive.")
 	}
 	// Возвращаем шаги активность продолжительность и отсутсвие ошибки
 	return steps, parts[1], duration, nil
@@ -71,7 +79,7 @@ func TrainingInfo(data string, weight, height float64) (string, error) {
 		if err != nil {
 			return "", err
 		}
-		result := fmt.Sprintf("Тип тренировки: %s \nДлительность: %.2f ч.\nДистанция %.2f км.\nСкорость:%.2f км/ч\nСожгли калории: %.2fккал\n", "Ходьба", duration.Hours(), dist, speed, calories)
+		result := fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", "Ходьба", duration.Hours(), dist, speed, calories)
 		return result, nil
 
 	case "Бег":
@@ -81,7 +89,7 @@ func TrainingInfo(data string, weight, height float64) (string, error) {
 		if err != nil {
 			return "", err
 		}
-		result := fmt.Sprintf("Тип тренировки: %s \nДлительность: %.2f ч.\nДистанция %.2f км.\nСкорость:%.2f км/ч\nСожгли калории: %.2fккал\n", "Бег", duration.Hours(), dist, speed, calories)
+		result := fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", "Бег", duration.Hours(), dist, speed, calories)
 		return result, nil
 
 	default:
