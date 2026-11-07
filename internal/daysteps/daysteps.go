@@ -24,43 +24,43 @@ func parsePackage(data string) (int, time.Duration, error) {
 	if len(parts) != 2 {
 		return 0, 0, errors.New("invalid input format")
 	}
-	//преобразование слайса (кол-во шагов)
+	// Преобразование слайса (кол-во шагов)
 	steps, err := strconv.Atoi(parts[0])
 	if err != nil {
 		return 0, 0, err
 	}
-	//проверка кол-ва шагов на 0
+	// Проверка кол-ва шагов на 0
 	if steps <= 0 {
 		return 0, 0, errors.New("steps must be positive")
 	}
-	//продолжительность
+	// Продолжительность прогулки
 	duration, err := time.ParseDuration(parts[1])
 	if err != nil {
 		return 0, 0, err
 	}
-	//проверка на 0
+	// Проверка на 0
 	if duration <= 0 {
 		return 0, 0, errors.New("duration must be positive")
 	}
-	//возвращаем переменные с данными
+	// Возвращаем переменные с данными
 	return steps, duration, nil
 }
 
 func DayActionInfo(data string, weight, height float64) string {
-	//Вызов функции и проверка на ошибку
+	// Вызов функции и проверка на ошибку
 	steps, duration, err := parsePackage(data)
 	if err != nil {
 		fmt.Println(err)
 		return ""
 	}
-	//проверяем кол-во шагов
+	// Проверяем кол-во шагов
 	if steps <= 0 {
 		return ""
 	}
-	//Вычисляем дистанцию
+	// Вычисляем дистанцию
 	distance := float64(steps) * stepLength
 	distanceKm := distance / float64(mInKm)
-	//Расчет калорий
+	// Расчет калорий
 	calories, err := spentcalories.WalkingSpentCalories(steps, weight, height, duration)
 	if err != nil {
 		fmt.Println(err)
