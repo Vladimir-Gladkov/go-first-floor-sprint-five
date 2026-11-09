@@ -19,18 +19,18 @@ const (
 )
 
 func parseTraining(data string) (int, string, time.Duration, error) {
-	// TODO: реализовать функцию
 	// Разделяем строку на шаги активность продолжительность и ошибку
 	parts := strings.Split(data, ",")
 	if len(parts) != 3 {
 		return 0, "", 0, errors.New("invalid input format")
 	}
+
 	// Преобразуем количество шагов
 	steps, err := strconv.Atoi(parts[0])
-	// Проверка кол-ва шагов на 0
 
+	// Проверка кол-ва шагов на 0
 	if err != nil {
-		return 0, "", 0, err
+		return 0, "", 0, fmt.Errorf("invalid format steps: %w", err)
 	}
 	if steps <= 0 {
 		return 0, "", 0, errors.New("the number of steps must be positive.")
@@ -38,7 +38,7 @@ func parseTraining(data string) (int, string, time.Duration, error) {
 	// Преобразуем продолжительность
 	duration, err := time.ParseDuration(parts[2])
 	if err != nil {
-		return 0, "", 0, err
+		return 0, "", 0, fmt.Errorf("invalid format duration: %w", err)
 	}
 	if duration <= 0 {
 		return 0, "", 0, errors.New("the duration of steps must be positive.")
@@ -48,14 +48,12 @@ func parseTraining(data string) (int, string, time.Duration, error) {
 }
 
 func distance(steps int, height float64) float64 {
-	// TODO: реализовать функцию
 	// Вычисляем дистанцию
 	distance := (float64(steps) * height * stepLengthCoefficient) / mInKm
 	return distance
 }
 
 func meanSpeed(steps int, height float64, duration time.Duration) float64 {
-	// TODO: реализовать функцию
 	if duration <= 0 {
 		return 0
 	}
@@ -64,7 +62,6 @@ func meanSpeed(steps int, height float64, duration time.Duration) float64 {
 }
 
 func TrainingInfo(data string, weight, height float64) (string, error) {
-	// TODO: реализовать функцию
 	// Вызов функции и проверка на ошибку
 	steps, trainingType, duration, err := parseTraining(data)
 	if err != nil {
@@ -98,7 +95,6 @@ func TrainingInfo(data string, weight, height float64) (string, error) {
 }
 
 func RunningSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
-	// TODO: реализовать функцию
 	if steps <= 0 {
 		return 0, errors.New("steps must be positive")
 	}
@@ -111,7 +107,7 @@ func RunningSpentCalories(steps int, weight, height float64, duration time.Durat
 }
 
 func WalkingSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
-	// TODO: реализовать функцию
+
 	if steps <= 0 || weight <= 0 || height <= 0 || duration <= 0 {
 		return 0, errors.New("data must be positive")
 	}

@@ -22,12 +22,12 @@ func parsePackage(data string) (int, time.Duration, error) {
 	// Проверяем, что слайс содержит ровно два элемента
 	parts := strings.Split(data, ",")
 	if len(parts) != 2 {
-		return 0, 0, errors.New("invalid input format")
+		return 0, 0, errors.New("invalid input format parts")
 	}
-	// Преобразование слайса (кол-во шагов)
+	// Преобразование слайса (количество шагов)
 	steps, err := strconv.Atoi(parts[0])
 	if err != nil {
-		return 0, 0, err
+		return 0, 0, fmt.Errorf("invalid steps format: %w", err)
 	}
 	// Проверка кол-ва шагов на 0
 	if steps <= 0 {
@@ -36,7 +36,7 @@ func parsePackage(data string) (int, time.Duration, error) {
 	// Продолжительность прогулки
 	duration, err := time.ParseDuration(parts[1])
 	if err != nil {
-		return 0, 0, err
+		return 0, 0, fmt.Errorf("invalid duration format: %w", err)
 	}
 	// Проверка на 0
 	if duration <= 0 {
