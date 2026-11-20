@@ -33,7 +33,7 @@ func parseTraining(data string) (int, string, time.Duration, error) {
 		return 0, "", 0, fmt.Errorf("invalid format steps: %w", err)
 	}
 	if steps <= 0 {
-		return 0, "", 0, errors.New("the number of steps must be positive.")
+		return 0, "", 0, errors.New("the number of steps must be positive")
 	}
 	// Преобразуем продолжительность
 	duration, err := time.ParseDuration(parts[2])
@@ -41,7 +41,7 @@ func parseTraining(data string) (int, string, time.Duration, error) {
 		return 0, "", 0, fmt.Errorf("invalid format duration: %w", err)
 	}
 	if duration <= 0 {
-		return 0, "", 0, errors.New("the duration of steps must be positive.")
+		return 0, "", 0, errors.New("the duration of steps must be positive")
 	}
 	// Возвращаем шаги активность продолжительность и отсутсвие ошибки
 	return steps, parts[1], duration, nil
